@@ -79,7 +79,26 @@ if persons.empty:
 # -------------------------
 # Simulation visuals
 # -------------------------
-fig = go.Figure()
+#fig = go.Figure()
+# Layout: chart left, clock right
+col_chart, col_clock = st.columns([4, 1])
+
+# Compute digital clock
+base_hour = 9
+base_minute = 0
+total_minutes = base_minute + current_time
+display_hour = base_hour + total_minutes // 60
+display_minute = total_minutes % 60
+clock_str = f"{display_hour:02d}:{display_minute:02d}"
+
+# Show clock
+with col_clock:
+    st.markdown("### ⏰ Clock")
+    st.markdown(f"<h2 style='text-align:center;'>{clock_str}</h2>", unsafe_allow_html=True)
+
+# Show chart
+with col_chart:
+    st.plotly_chart(fig, use_container_width=True)
 
 # Warehouses
 fig.add_trace(go.Scatter(
@@ -136,6 +155,6 @@ fig.update_layout(
     height=600
 )
 
-st.plotly_chart(fig, use_container_width=True)
+#st.plotly_chart(fig, use_container_width=True)
 
 st.info("Use the button in the sidebar to move time forward or backward.")
