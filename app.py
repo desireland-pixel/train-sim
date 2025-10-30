@@ -176,7 +176,8 @@ for wh_id, group in packages.groupby("warehouse_id"):
                 marker=dict(size=8, color="#D2B48C", symbol="square",
                             line=dict(color="black", width=0.25)),
                 name="Packages",
-                showlegend=(wh_id == packages.warehouse_id.iloc[0])
+                showlegend=(len(fig.data) == 3)
+                #showlegend=(wh_id == packages.warehouse_id.iloc[0])
             ))
 
 # -------------------------
