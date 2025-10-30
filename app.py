@@ -79,7 +79,7 @@ if persons.empty:
 # -------------------------
 # Simulation visuals
 # -------------------------
-#fig = go.Figure()
+fig = go.Figure()
 # Layout: chart left, clock right
 col_chart, col_clock = st.columns([4, 1])
 
