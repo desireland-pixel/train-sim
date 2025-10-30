@@ -32,8 +32,11 @@ persons = load_csv("persons.csv")
 st.sidebar.header("Simulation Settings")
 max_packages_per_person = st.sidebar.number_input("Max packages a person can carry", 1, 10, 5)
 num_people = st.sidebar.number_input("If persons.csv missing, auto-create N persons", 1, 50, 10)
+current_time = st.sidebar.number_input("Current time (minutes)", 0, 60, 0)
 
+# -------------------------
 # Orders per train inputs
+# -------------------------
 st.sidebar.markdown("### Orders per Train")
 order_T1 = st.sidebar.number_input("T1 Orders", 0, 20, 0)
 order_T2 = st.sidebar.number_input("T2 Orders", 0, 20, 0)
@@ -70,11 +73,6 @@ if st.sidebar.button("Generate Packages from Orders"):
         st.session_state['last_generated'] = new_df.copy()
     else:
         st.session_state['last_generated'] = pd.DataFrame()
-
-# -------------------------
-# Current simulation time
-# -------------------------
-current_time = st.sidebar.number_input("Current time (minutes)", 0, 60, 0)
 
 # -------------------------
 # Page title
