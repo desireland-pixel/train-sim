@@ -146,7 +146,7 @@ fig.update_layout(
 
 # Show clock
 st.markdown(f"""
-<div style='text-align: right; font-size:24px;'>
+<div style='text-align: right; font-size:48px;'>
     ⏰ {clock_str}
 </div>
 """, unsafe_allow_html=True)
