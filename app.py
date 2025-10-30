@@ -69,7 +69,9 @@ if st.sidebar.button("Generate Packages from Orders"):
                     "generated_time": start_time - 10,
                     "quantity": 1
                 })
-    packages = pd.DataFrame(gen_packages)
+    st.session_state["packages"] = pd.DataFrame(gen_packages)
+    packages = st.session_state["packages"]
+
     packages.to_csv(DATA_DIR / "packages.csv", index=False)
     st.session_state["pkg_text"] = packages[["package_id", "warehouse_id", "generated_time"]]
 
@@ -172,24 +174,27 @@ fig.add_trace(go.Scatter(
 # -------------------------
 # Packages display
 # -------------------------
-base_hour = 9
-base_minute = 0
+if "packages" in st.session_state:
+    packages = st.session_state["packages"]
+    
+    base_hour = 9
+    base_minute = 0
 
-for _, pkg in packages.iterrows():
-    if current_time >= pkg.generated_time:
-        wh = warehouses[warehouses.warehouse_id == pkg.warehouse_id].iloc[0]
-        # position slightly to right of warehouse
-        x = wh.x + 5 + (int(pkg.package_id[-2:])-1)*5
-        y = wh.y
-        clock_str = f"{base_hour + pkg.generated_time//60:02d}:{base_minute + pkg.generated_time%60:02d}"
-        fig.add_trace(go.Scatter(
-            x=[x], y=[y],
-            mode="markers+text",
-            text=[pkg.package_id],
-            textposition="top center",
-            marker=dict(size=12, color="#D2B48C", symbol="square"),
-            name=f"Package {pkg.package_id}"
-        ))
+    for _, pkg in packages.iterrows():
+        if current_time >= pkg.generated_time:
+            wh = warehouses[warehouses.warehouse_id == pkg.warehouse_id].iloc[0]
+            # position slightly to right of warehouse
+            x = wh.x + 5 + (int(pkg.package_id[-2:])-1)*5
+            y = wh.y
+            clock_str = f"{base_hour + pkg.generated_time//60:02d}:{base_minute + pkg.generated_time%60:02d}"
+            fig.add_trace(go.Scatter(
+                x=[x], y=[y],
+                mode="markers+text",
+                text=[pkg.package_id],
+                textposition="top center",
+                marker=dict(size=12, color="#D2B48C", symbol="square"),
+                name=f"Package {pkg.package_id}"
+            ))
 
 # -------------------------
 # Clock on top right
