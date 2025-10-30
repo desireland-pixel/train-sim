@@ -32,7 +32,7 @@ st.sidebar.header("Simulation Settings")
 max_packages_per_person = st.sidebar.number_input("Max packages a person can carry", 1, 10, 5)
 num_people = st.sidebar.number_input("If persons.csv missing, auto-create N persons", 1, 50, 10)
 
-current_time = st.sidebar.slider("Current time (minutes)", 0, 120, 0)
+#current_time = st.sidebar.slider("Current time (minutes)", 0, 120, 0)
 current_time = st.sidebar.number_input("Current time (minutes)", 0, 120, 0)
 
 st.title("🚉 Train–Warehouse Simulation")
@@ -136,4 +136,4 @@ fig.update_layout(
 
 st.plotly_chart(fig, use_container_width=True)
 
-st.info("Use the slider in the sidebar to move time forward or backward.")
+st.info("Use the button in the sidebar to move time forward or backward.")
