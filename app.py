@@ -89,7 +89,7 @@ fig.add_trace(go.Scatter(
     name="Warehouses",
     marker=dict(size=15, color="green", symbol="sqaure"),
     textposition="top center",
-    textfont=dict(color="black")
+    #textfont=dict(color="black")
 ))
 
 # Platforms (5 fixed)
