@@ -153,7 +153,7 @@ if "packages" in st.session_state:
 # Group packages by warehouse to arrange them neatly
 offset_x = 12
 col_spacing = 12
-row_spacing = 10
+row_spacing = 15
 max_cols = 5
 
 for wh_id, group in packages.groupby("warehouse_id"):
@@ -166,17 +166,17 @@ for wh_id, group in packages.groupby("warehouse_id"):
 
             # position right of warehouse
             x = wh.x + offset_x + col * col_spacing
-            y = wh.y - row * row_spacing  # row goes downward
+            y = wh.y + row * row_spacing
 
             fig.add_trace(go.Scatter(
                 x=[x], y=[y],
                 mode="markers+text",
                 text=[pkg.package_id],
-                textposition="bottom center",  # 👈 text below the box
+                textposition="bottom center",
                 marker=dict(size=8, color="#D2B48C", symbol="square",
                             line=dict(color="black", width=0.25)),
                 name="Packages",
-                showlegend=(wh_id == packages.warehouse_id.iloc[0])  # only once
+                showlegend=(wh_id == packages.warehouse_id.iloc[0])
             ))
 
 # -------------------------
