@@ -153,7 +153,7 @@ if "packages" in st.session_state:
 # Group packages by warehouse to arrange them neatly
 offset_x = 12
 col_spacing = 12
-row_spacing = 15
+row_spacing = 20
 max_cols = 5
 
 for wh_id, group in packages.groupby("warehouse_id"):
