@@ -134,7 +134,8 @@ fig.add_trace(go.Scatter(
     text=[tid for tid,_,_ in train_positions],
     mode="markers+text",
     name="Trains",
-    marker=dict(size=20, color="red")
+    marker=dict(size=20, color="red"),
+    textfont=dict(color="white")
 ))
 
 fig.update_layout(
