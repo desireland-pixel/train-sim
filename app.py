@@ -17,7 +17,15 @@ DATA_DIR.mkdir(exist_ok=True)
 def load_csv(filename):
     path = DATA_DIR / filename
     if path.exists():
-        return pd.read_csv(path)
+        try:
+            df = pd.read_csv(path)
+            # if file exists but has no rows or columns
+            if df.empty or len(df.columns) == 0:
+                return pd.DataFrame()
+            return df
+        except pd.errors.EmptyDataError:
+            # happens when file is 0 bytes (empty)
+            return pd.DataFrame()
     else:
         return pd.DataFrame()
 
