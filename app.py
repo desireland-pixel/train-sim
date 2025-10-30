@@ -71,7 +71,7 @@ if st.sidebar.button("Generate Packages from Orders"):
                 })
     packages = pd.DataFrame(gen_packages)
     packages.to_csv(DATA_DIR / "packages.csv", index=False)
-    st.session_state["pkg_text"] = packages[["package_id","warehouse_id","generated_time"]]
+    st.session_state["pkg_text"] = packages[["pkg_id","warehouse_id","generated_time"]]
 
 # -------------------------
 # Show package text summary
