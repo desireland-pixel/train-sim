@@ -174,12 +174,12 @@ fig.add_trace(go.Scatter(
 # -------------------------
 # Packages display
 # -------------------------
-if "packages" in st.session_state:
-    packages = st.session_state["packages"]
-    
     base_hour = 9
     base_minute = 0
 
+if "packages" in st.session_state:
+    packages = st.session_state["packages"]
+    
     for _, pkg in packages.iterrows():
         if current_time >= pkg.generated_time:
             wh = warehouses[warehouses.warehouse_id == pkg.warehouse_id].iloc[0]
