@@ -92,8 +92,8 @@ fig.add_trace(go.Scatter(
 # Platforms (5 fixed)
 platforms = pd.DataFrame({
     'platform': [1,2,3,4,5],
-    'x': [100,200,300,400,500],
-    'y': [0,0,0,0,0]
+    'x': [200,200,200,200,200],
+    'y': [150,100,50,0,-50]
 })
 
 fig.add_trace(go.Scatter(
