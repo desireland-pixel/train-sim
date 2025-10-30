@@ -1,0 +1,11 @@
+package_id,warehouse_id,generated_time,quantity
+P001,W1,12,2
+P002,W1,18,1
+P003,W2,22,3
+P004,W3,8,1
+P005,W4,25,2
+P006,W5,5,1
+P007,W6,30,2
+P008,W2,28,1
+P009,W3,14,4
+P010,W5,40,2
