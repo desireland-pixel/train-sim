@@ -91,15 +91,6 @@ display_hour = base_hour + total_minutes // 60
 display_minute = total_minutes % 60
 clock_str = f"{display_hour:02d}:{display_minute:02d}"
 
-# Show clock
-with col_clock:
-    st.markdown("### ⏰ Clock")
-    st.markdown(f"<h2 style='text-align:center;'>{clock_str}</h2>", unsafe_allow_html=True)
-
-# Show chart
-with col_chart:
-    st.plotly_chart(fig, use_container_width=True)
-
 # Warehouses
 fig.add_trace(go.Scatter(
     x=warehouses.x, y=warehouses.y,
@@ -156,5 +147,13 @@ fig.update_layout(
 )
 
 #st.plotly_chart(fig, use_container_width=True)
+# Show clock
+with col_clock:
+    st.markdown("### ⏰ Clock")
+    st.markdown(f"<h2 style='text-align:center;'>{clock_str}</h2>", unsafe_allow_html=True)
+
+# Show chart
+with col_chart:
+    st.plotly_chart(fig, use_container_width=True)
 
 st.info("Use the button in the sidebar to move time forward or backward.")
