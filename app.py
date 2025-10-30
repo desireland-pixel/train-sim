@@ -193,7 +193,8 @@ if "packages" in st.session_state:
                 text=[pkg.package_id],
                 textposition="top center",
                 marker=dict(size=12, color="#D2B48C", symbol="square"),
-                name=f"Package {pkg.package_id}"
+                name="Packages",
+                showlegend=(pkg.package_id == packages.iloc[0].package_id)
             ))
 
 # -------------------------
@@ -216,8 +217,16 @@ st.plotly_chart(fig, use_container_width=True)
 # Show package text summary
 # -------------------------
 if "pkg_text" in st.session_state:
+    pkg_text = st.session_state["pkg_text"].copy()
+
+    # Format generated_time as HH:MM (base 09:00)
+    base_hour = 9
+    pkg_text["generated_time"] = pkg_text["generated_time"].apply(
+        lambda t: f"{base_hour + t // 60:02d}:{t % 60:02d}"
+    )
+
     st.markdown("**Generated Packages:**")
-    st.dataframe(st.session_state["pkg_text"])
+    st.dataframe(pkg_text)
 
 # -------------------------
 # Info text
