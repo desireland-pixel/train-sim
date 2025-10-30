@@ -150,21 +150,33 @@ base_minute = 0
 if "packages" in st.session_state:
     packages = st.session_state["packages"]
     
-    for _, pkg in packages.iterrows():
+# Group packages by warehouse to arrange them neatly
+offset_x = 12
+col_spacing = 12
+row_spacing = 10
+max_cols = 5
+
+for wh_id, group in packages.groupby("warehouse_id"):
+    wh = warehouses[warehouses.warehouse_id == wh_id].iloc[0]
+
+    for idx, (_, pkg) in enumerate(group.iterrows()):
         if current_time >= pkg.generated_time:
-            wh = warehouses[warehouses.warehouse_id == pkg.warehouse_id].iloc[0]
-            # position slightly to right of warehouse
-            x = wh.x + 5 + (int(pkg.package_id[-2:])-1)*5
-            y = wh.y
-            clock_str = f"{base_hour + pkg.generated_time//60:02d}:{base_minute + pkg.generated_time%60:02d}"
+            col = idx % max_cols
+            row = idx // max_cols
+
+            # position right of warehouse
+            x = wh.x + offset_x + col * col_spacing
+            y = wh.y - row * row_spacing  # row goes downward
+
             fig.add_trace(go.Scatter(
                 x=[x], y=[y],
                 mode="markers+text",
                 text=[pkg.package_id],
-                textposition="top center",
-                marker=dict(size=8, color="#D2B48C", symbol="square", line=dict(color="black", width=0.25)),
+                textposition="bottom center",  # 👈 text below the box
+                marker=dict(size=8, color="#D2B48C", symbol="square",
+                            line=dict(color="black", width=0.25)),
                 name="Packages",
-                showlegend=(pkg.package_id == packages.iloc[0].package_id)
+                showlegend=(wh_id == packages.warehouse_id.iloc[0])  # only once
             ))
 
 # -------------------------
