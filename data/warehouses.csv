@@ -1,0 +1,7 @@
+warehouse_id,x,y,zone,walk_time_to_platform
+W1,60,-10,ZoneA,3
+W2,100,-10,ZoneA,4
+W3,140,-10,ZoneB,3
+W4,180,-10,ZoneB,5
+W5,40,-30,ZoneC,6
+W6,220,-30,ZoneC,4
