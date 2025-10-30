@@ -17,9 +17,15 @@ DATA_DIR.mkdir(exist_ok=True)
 def load_csv(filename):
     path = DATA_DIR / filename
     if path.exists():
-        return pd.read_csv(path)
+        try:
+            df = pd.read_csv(path)
+            if df.empty or len(df.columns) == 0:
+                return pd.DataFrame()
+            return df
+        except pd.errors.EmptyDataError:
+            return pd.DataFrame()
     else:
-        return pd.DataFrame(columns=['package_id','warehouse_id','generated_time','quantity'])
+        return pd.DataFrame()
 
 trains = load_csv("trains.csv")
 warehouses = load_csv("warehouses.csv")
