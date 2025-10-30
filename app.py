@@ -192,7 +192,7 @@ if "packages" in st.session_state:
                 mode="markers+text",
                 text=[pkg.package_id],
                 textposition="top center",
-                marker=dict(size=12, color="#D2B48C", symbol="square"),
+                marker=dict(size=8, color="#D2B48C", symbol="square"),
                 name="Packages",
                 showlegend=(pkg.package_id == packages.iloc[0].package_id)
             ))
