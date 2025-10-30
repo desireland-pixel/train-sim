@@ -181,7 +181,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # Show chart
-#st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, use_container_width=True)
 # Fix chart axis ranges
 fig.update_xaxes(range=[0, 500])
 fig.update_yaxes(range=[-100, 200])
