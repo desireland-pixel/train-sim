@@ -56,24 +56,31 @@ train_orders = [order_T1, order_T2, order_T3, order_T4, order_T5]
 # -------------------------
 if st.sidebar.button("Generate Packages from Orders"):
     gen_packages = []
+
+    # For each train, use the manual order inputs from sidebar
     for i, train_id in enumerate(trains.train_id, 1):
-        n_orders = st.session_state.get(f"orders_{train_id}", 0)
+        n_orders = train_orders[i - 1]  # take order count directly from sidebar
         if n_orders > 0:
-            start_time = int(trains[trains.train_id == train_id].start_time.values[0])
-            for j in range(1, n_orders+1):
-                pkg_id = f"{i:02d}{j:02d}"
-                warehouse_id = np.random.choice(warehouses.warehouse_id)
+            start_time = int(trains.loc[trains.train_id == train_id, "start_time"].values[0])
+            for j in range(1, n_orders + 1):
+                pkg_id = f"{i:02d}{j:02d}"  # 0101, 0102 ... etc.
+                warehouse_id = np.random.choice(warehouses.warehouse_id)  # random W1–W6
                 gen_packages.append({
                     "package_id": pkg_id,
                     "warehouse_id": warehouse_id,
-                    "generated_time": start_time - 10,
-                    "quantity": 1
+                    "generated_time": start_time - 10
                 })
-    st.session_state["packages"] = pd.DataFrame(gen_packages)
-    packages = st.session_state["packages"]
 
-    packages.to_csv(DATA_DIR / "packages.csv", index=False)
-    st.session_state["pkg_text"] = packages[["package_id", "warehouse_id", "generated_time"]]
+    # Convert only if we actually generated packages
+    if gen_packages:
+        packages = pd.DataFrame(gen_packages)
+        st.session_state["packages"] = packages
+        packages.to_csv(DATA_DIR / "packages.csv", index=False)
+        st.session_state["pkg_text"] = packages[["package_id", "warehouse_id", "generated_time"]]
+    else:
+        st.warning("No orders entered — no packages generated.")
+        st.session_state.pop("packages", None)
+        st.session_state.pop("pkg_text", None)
 
 # -------------------------
 # Show package text summary
