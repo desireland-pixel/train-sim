@@ -1,0 +1,6 @@
+train_id,source,start_time,arrive_time,platform,x_source,y_source,x_platform,y_platform
+T1,S1,10,25,1,0,-20,80,0
+T2,S1,15,40,2,0,-20,120,0
+T3,S2,5,30,3,200,-20,200,0
+T4,S2,20,50,4,200,-20,280,0
+T5,S3,0,35,5,100,-80,160,0
