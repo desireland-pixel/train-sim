@@ -174,8 +174,8 @@ fig.add_trace(go.Scatter(
 # -------------------------
 # Packages display
 # -------------------------
-    base_hour = 9
-    base_minute = 0
+base_hour = 9
+base_minute = 0
 
 if "packages" in st.session_state:
     packages = st.session_state["packages"]
