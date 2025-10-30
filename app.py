@@ -83,13 +83,6 @@ if st.sidebar.button("Generate Packages from Orders"):
         st.session_state.pop("pkg_text", None)
 
 # -------------------------
-# Show package text summary
-# -------------------------
-if "pkg_text" in st.session_state:
-    st.markdown("**Generated Packages:**")
-    st.dataframe(st.session_state["pkg_text"])
-
-# -------------------------
 # Page title
 # -------------------------
 st.title("🚉 Train–Warehouse Simulation")
@@ -219,4 +212,14 @@ st.markdown(f"""
 # Show chart
 st.plotly_chart(fig, use_container_width=True)
 
+# -------------------------
+# Show package text summary
+# -------------------------
+if "pkg_text" in st.session_state:
+    st.markdown("**Generated Packages:**")
+    st.dataframe(st.session_state["pkg_text"])
+
+# -------------------------
+# Info text
+# -------------------------
 st.info("Use the button in the sidebar to move time forward or backward.")
