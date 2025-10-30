@@ -89,36 +89,6 @@ st.title("🚉 Train–Warehouse Simulation")
 st.markdown(f"**Simulation Time: {current_time} min**")
 
 # -------------------------
-# Fallback data if CSVs missing
-# -------------------------
-if trains.empty:
-    trains = pd.DataFrame({
-        'train_id': ['T1', 'T2', 'T3', 'T4', 'T5'],
-        'platform': [1, 2, 3, 4, 5],
-        'start_time': [0, 10, 20, 30, 40],
-        'arrive_time': [20, 30, 40, 50, 60],
-        'x_source': [0, 0, 0, 0, 0],
-        'y_source': [-50, -60, -70, -80, -90],
-        'x_platform': [100, 200, 300, 400, 500],
-        'y_platform': [0, 0, 0, 0, 0]
-    })
-
-if warehouses.empty:
-    warehouses = pd.DataFrame({
-        'warehouse_id': ['W1','W2','W3','W4','W5','W6'],
-        'zone': ['A','A','B','B','C','C'],
-        'x': [80,120,250,290,400,440],
-        'y': [100,120,100,120,100,120],
-        'walk_time_to_platform': [3,4,3,5,6,4]
-    })
-
-if persons.empty:
-    persons = pd.DataFrame({
-        'person_id': [f'Person{i+1}' for i in range(num_people)],
-        'home_warehouse': np.random.choice(warehouses.warehouse_id, num_people)
-    })
-
-# -------------------------
 # Simulation visuals
 # -------------------------
 fig = go.Figure()
