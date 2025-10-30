@@ -51,34 +51,34 @@ order_T4 = st.sidebar.number_input("T4 Orders", 0, 20, 0)
 order_T5 = st.sidebar.number_input("T5 Orders", 0, 20, 0)
 train_orders = [order_T1, order_T2, order_T3, order_T4, order_T5]
 
-# Button to generate packages
+# -------------------------
+# Generate Packages Button
+# -------------------------
 if st.sidebar.button("Generate Packages from Orders"):
-    generated_packages = []
-    for t_idx, n_orders in enumerate(train_orders, start=1):
-        if n_orders == 0:
-            continue
-        train = trains.iloc[t_idx-1]
-        start_time = int(train.start_time)
-        gen_time = max(0, start_time - 10)
-        # Check existing IDs for this train
-        existing_ids = packages[packages.package_id.str.startswith(f"{t_idx:02d}")]
-        existing_count = len(existing_ids)
-        for i in range(1, n_orders+1):
-            pkg_id = f"{t_idx:02d}{existing_count+i:02d}"
-            warehouse_id = random.choice(list(warehouses.warehouse_id))
-            generated_packages.append({
-                'package_id': pkg_id,
-                'warehouse_id': warehouse_id,
-                'generated_time': gen_time,
-                'quantity': 1
-            })
-    if generated_packages:
-        new_df = pd.DataFrame(generated_packages)
-        packages = pd.concat([packages, new_df], ignore_index=True)
-        packages.to_csv(DATA_DIR / "packages.csv", index=False)
-        st.session_state['last_generated'] = new_df.copy()
-    else:
-        st.session_state['last_generated'] = pd.DataFrame()
+    gen_packages = []
+    for i, train_id in enumerate(trains.train_id, 1):
+        n_orders = st.session_state.get(f"orders_{train_id}", 0)
+        if n_orders > 0:
+            start_time = int(trains[trains.train_id == train_id].start_time.values[0])
+            for j in range(1, n_orders+1):
+                pkg_id = f"{i:02d}{j:02d}"
+                warehouse_id = np.random.choice(warehouses.warehouse_id)
+                gen_packages.append({
+                    "package_id": pkg_id,
+                    "warehouse_id": warehouse_id,
+                    "generated_time": start_time - 10,
+                    "quantity": 1
+                })
+    packages = pd.DataFrame(gen_packages)
+    packages.to_csv(DATA_DIR / "packages.csv", index=False)
+    st.session_state["pkg_text"] = packages[["package_id","warehouse_id","generated_time"]]
+
+# -------------------------
+# Show package text summary
+# -------------------------
+if "pkg_text" in st.session_state:
+    st.markdown("**Generated Packages:**")
+    st.dataframe(st.session_state["pkg_text"])
 
 # -------------------------
 # Page title
